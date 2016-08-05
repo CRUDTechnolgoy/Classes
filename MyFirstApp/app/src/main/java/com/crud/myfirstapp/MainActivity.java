@@ -1,19 +1,25 @@
 package com.crud.myfirstapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText userName, password;
     TextView buttonSignUp;
     Button login;
+    Spinner spinnerCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.textViewPassword);
         login = (Button) findViewById(R.id.buttonLogin);
         buttonSignUp = (TextView) findViewById(R.id.buttonSignUp);
+        spinnerCity = (Spinner) findViewById(R.id.spinnerCity);
+        String vCitys[] = getResources().getStringArray(R.array.city);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, vCitys);
+
+        //setting adapter to spinner
+        spinnerCity.setAdapter(adapter);
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,14 +49,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.e("MainActivity", "I have clicked on login");
+                //get the value from edittext
                 String vUserName = userName.getText().toString();
                 String vPassword = password.getText().toString();
+                //get the value from spinner
+                String vCity = spinnerCity.getSelectedItem().toString();
+                //Printing the value of vCity from spinner
+                Log.e("MainActity", vCity);
                 if (vUserName.equals("demo") && vPassword.equals("demo")) {
                     Log.e("MainActivity", "Login successfully");
                     Intent intent = new Intent(MainActivity.this, Dashboard.class);
                     startActivity(intent);
                 } else {
-                    Log.e("MainActivity", "Invalid details");
+                    Toast.makeText(MainActivity.this, "Invlaid Details", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -72,5 +89,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.e("MainActivity", "onStart");
+    }
+    //handling backprassed
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Confermation")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        MainActivity.this.finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        return;
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
     }
 }

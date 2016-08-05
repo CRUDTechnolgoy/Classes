@@ -38,7 +38,7 @@
             android:id="@+id/textViewUserName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter User Name"/>
+            android:hint="@string/enter_user_name"/>
 
         <TextView
             android:layout_width="fill_parent"
@@ -53,6 +53,14 @@
             android:layout_height="wrap_content"
             android:hint="Enter Password"
             android:inputType="textPassword"/>
+
+        <Spinner
+            android:id="@+id/spinnerCity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+
+        </Spinner>
 
         <Button
             android:id="@+id/buttonLogin"

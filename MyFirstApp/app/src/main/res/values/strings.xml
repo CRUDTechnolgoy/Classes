@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">MyFirstApp</string>
+    <string name="app_name">My First App</string>
+    <string name="enter_user_name">Enter User Name</string>
+
+
+    <string-array name="city">
+        <item>Indore</item>
+        <item>Ratlam</item>
+        <item>Ujjain</item>
+        <item>Mandsour</item>
+        <item>Mahow</item>
+    </string-array>
+
 </resources>
