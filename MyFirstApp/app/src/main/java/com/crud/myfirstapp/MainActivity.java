@@ -14,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crud.myfirstapp.data.DataHelper;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText userName, password;
@@ -56,12 +58,23 @@ public class MainActivity extends AppCompatActivity {
                 String vCity = spinnerCity.getSelectedItem().toString();
                 //Printing the value of vCity from spinner
                 Log.e("MainActity", vCity);
-                if (vUserName.equals("demo") && vPassword.equals("demo")) {
-                    Log.e("MainActivity", "Login successfully");
-                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
-                    startActivity(intent);
+                if (vUserName.length() > 0) {
+                    if (vPassword.length() > 0) {
+                        if (DataHelper.getInstance().checkUser(vUserName, vPassword) > 0) {
+                            Log.e("MainActivity", "Login successfully");
+                            PrefsHelper.getPrefsHelper().savePref(PrefsHelper.IS_LOGIN, true);
+                            Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(MainActivity.this, "Invlaid Details", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        password.setError("Password is required");
+                        password.requestFocus();
+                    }
                 } else {
-                    Toast.makeText(MainActivity.this, "Invlaid Details", Toast.LENGTH_LONG).show();
+                    userName.setError("Username is required");
+                    password.requestFocus();
                 }
             }
         });
@@ -90,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         Log.e("MainActivity", "onStart");
     }
+
     //handling backprassed
     @Override
     public void onBackPressed() {
