@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_add_box_white_36pt"
+        android:orderInCategory="100"
+        android:title="Log Out"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="Generate Excel"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_play"
+        android:orderInCategory="100"
+        android:title="Play Music"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_goto"
+        android:orderInCategory="100"
+        android:title="Open URL"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_references"
+        android:orderInCategory="100"
+        android:title="References"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_exit"
+        android:orderInCategory="100"
+        android:title="Exit"
+        app:showAsAction="never"/>
+</menu>

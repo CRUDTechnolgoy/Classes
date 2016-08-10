@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crud.myfirstapp.data.DataHelper;
+import com.crud.myfirstapp.crud.NetworkUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,23 +58,27 @@ public class MainActivity extends AppCompatActivity {
                 String vCity = spinnerCity.getSelectedItem().toString();
                 //Printing the value of vCity from spinner
                 Log.e("MainActity", vCity);
-                if (vUserName.length() > 0) {
-                    if (vPassword.length() > 0) {
-                        if (DataHelper.getInstance().checkUser(vUserName, vPassword) > 0) {
-                            Log.e("MainActivity", "Login successfully");
-                            PrefsHelper.getPrefsHelper().savePref(PrefsHelper.IS_LOGIN, true);
-                            Intent intent = new Intent(MainActivity.this, Dashboard.class);
-                            startActivity(intent);
+                if (NetworkUtil.getConnectivityStatus(MainActivity.this)) {
+                    if (vUserName.length() > 0) {
+                        if (vPassword.length() > 0) {
+                            if (vUserName.equals("demo") && vPassword.equals("demo")) {
+                                Log.e("MainActivity", "Login successfully");
+                                PrefsHelper.getPrefsHelper().savePref(PrefsHelper.IS_LOGIN, true);
+                                Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(MainActivity.this, "Invlaid Details", Toast.LENGTH_LONG).show();
+                            }
                         } else {
-                            Toast.makeText(MainActivity.this, "Invlaid Details", Toast.LENGTH_LONG).show();
+                            password.setError("Password is required");
+                            password.requestFocus();
                         }
                     } else {
-                        password.setError("Password is required");
+                        userName.setError("Username is required");
                         password.requestFocus();
                     }
                 } else {
-                    userName.setError("Username is required");
-                    password.requestFocus();
+                    Toast.makeText(MainActivity.this, "No Intenet foun.", Toast.LENGTH_LONG).show();
                 }
             }
         });
